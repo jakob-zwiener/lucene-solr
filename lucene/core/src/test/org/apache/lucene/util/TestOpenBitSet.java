@@ -297,11 +297,32 @@ public class TestOpenBitSet extends BaseDocIdSetTestCase<OpenBitSet> {
     OpenBitSet bs1 = new OpenBitSet(200);
     OpenBitSet bs2 = new OpenBitSet(64);
     bs1.set(3);
-    bs2.set(3);       
+    bs2.set(3);    
     assertEquals(bs1, bs2);
     assertEquals(bs1.hashCode(), bs2.hashCode());
   } 
-
+  
+  public void testHashCodeEqualsSetBitRightWlen() {
+    OpenBitSet bs1 = new OpenBitSet();
+    OpenBitSet bs2 = new OpenBitSet();
+    int leftSetBitIndex = 3;
+    int rightSetBitIndex = 1000;
+    
+    bs1.set(leftSetBitIndex);
+    bs2.set(leftSetBitIndex);
+    bs2.set(rightSetBitIndex);
+    
+    // the next lines could also be replaced with bs2.wlen = 1
+    bs2.intersect(bs1);
+    // precondition for calling getAndSet according to javadocs
+    assertTrue(rightSetBitIndex < bs2.size());
+    bs2.getAndSet(rightSetBitIndex);
+    // now bs2 has bits set right of wlen
+    
+    assertEquals(bs1, bs2);
+    assertEquals(bs1.hashCode(), bs2.hashCode());
+  }
+  
   
   private OpenBitSet makeOpenBitSet(int[] a) {
     OpenBitSet bs = new OpenBitSet();
