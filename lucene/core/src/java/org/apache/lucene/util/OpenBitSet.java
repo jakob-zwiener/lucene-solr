@@ -419,7 +419,7 @@ public class OpenBitSet extends DocIdSet implements Bits, Cloneable {
 
 
   /** Sets a bit and returns the previous value.
-   * The index should be less than the OpenBitSet size.
+   * The index should be less than the OpenBitSet getNumWords.
    */
   public boolean getAndSet(int index) {
     assert index >= 0 && index < numBits;
