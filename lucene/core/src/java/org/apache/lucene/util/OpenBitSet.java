@@ -887,7 +887,7 @@ public class OpenBitSet extends DocIdSet implements Bits, Cloneable {
     // Start with a zero hash and use a mix that results in zero if the input is zero.
     // This effectively truncates trailing zeros without an explicit check.
     long h = 0;
-    for (int i = bits.length; --i>=0;) {
+    for (int i = wlen; --i>=0;) {
       h ^= bits[i];
       h = (h << 1) | (h >>> 63); // rotate left
     }
